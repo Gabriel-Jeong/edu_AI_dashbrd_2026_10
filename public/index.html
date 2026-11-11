@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:,">
+    <meta name="description" content="텀블러 생산과 출고 기록의 흐름을 확인하는 교육용 운영 대시보드입니다.">
+    <title>텀블공장 · 오늘 운영</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">본문으로 이동</a>
+
+    <header>
+      <a class="brand" href="#/today" aria-label="텀블공장 관제 대시보드 오늘 운영">
+        <img src="./assets/tumble-factory-logo.png" alt="">
+        <span>텀블공장</span>
+        <small>관제 대시보드</small>
+      </a>
+      <div class="header-actions">
+        <label for="view-time">기준 시각</label>
+        <select id="view-time" name="view-time">
+          <option value="">현재</option>
+        </select>
+        <span id="freshness" class="neutral">확인 중</span>
+        <button id="refresh-btn" type="button" title="데이터 새로고침" aria-label="데이터 새로고침">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 7v5h-5M4 17v-5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5.64 9A7 7 0 0 1 18 6l2 2M4 16l2 2a7 7 0 0 0 12.36-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <span id="countdown-text" class="meta">조회 중…</span>
+        <button id="header-alerts-link" type="button" class="neutral" aria-label="알림 확인 중" aria-expanded="false" aria-controls="notification-dropdown">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span id="header-alerts-text">알림 확인 중</span>
+        </button>
+        <div id="notification-dropdown" hidden></div>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <section id="page-content" aria-labelledby="page-title">
+        <h1 id="page-title">오늘 운영</h1>
+        <p>생산·출고 실적과 운영 상태를 살펴봅니다.</p>
+        <section class="hero neutral" aria-labelledby="hero-title">
+          <p>먼저 확인할 일</p>
+          <h2 id="hero-title">우선 확인할 문제가 없습니다.</h2>
+          <p hidden></p>
+          <p>운영 담당자 · 기록 갱신 상태를 계속 확인해 주세요.</p>
+        </section>
+        <div class="grid kpis">
+          <article class="card" aria-labelledby="factory-title">
+            <h2 id="factory-title">공장 생산</h2>
+            <p id="factory-quantity"><span>생산 100개</span><span>· 목표 120개</span></p>
+            <p id="factory-progress-text">계획 대비 83.3%</p>
+            <progress id="factory-progress" max="100" value="83.3" aria-label="공장 생산 계획 대비 83.3%">83.3%</progress>
+            <p id="factory-exceeded" hidden>목표 초과</p>
+            <a class="card-link" href="#/records/factory">생산 기록 보기</a>
+            <figure id="factory-photo">
+              <img src="./assets/approved/factory.png" alt="생산 라인 참고 사진">
+              <figcaption class="meta">공장 생산 참고 사진</figcaption>
+            </figure>
+            <section id="factory-graph" aria-label="텀블공장 시간별 수량 그래프. 좌우 방향키로 이동합니다.">
+              <p class="loading-graph">시간별 기록 조회 중</p>
+              <p hidden>시간별 기록이 없습니다.</p>
+              <div class="graph-scroll" tabindex="0" aria-label="텀블공장 시간별 수량 그래프. 좌우 방향키로 이동합니다." hidden></div>
+              <p hidden>오늘 시간별 완료 수량 · 좌우로 이동해 확인하세요.</p>
+            </section>
+          </article>
+
+          <article class="card" aria-labelledby="warehouse-title">
+            <h2 id="warehouse-title">창고 출고</h2>
+            <p id="warehouse-quantity"><span>출고 75개</span><span>· 목표 100개</span></p>
+            <p id="warehouse-progress-text">계획 대비 75.0%</p>
+            <progress id="warehouse-progress" max="100" value="75" aria-label="창고 출고 계획 대비 75.0%">75%</progress>
+            <p id="warehouse-exceeded" hidden>목표 초과</p>
+            <a class="card-link" href="#/records/warehouse">출고 기록 보기</a>
+            <figure>
+              <img src="./assets/approved/warehouse.png" alt="물류창고 참고 사진">
+              <figcaption class="meta">창고 출고 참고 사진</figcaption>
+            </figure>
+            <section id="warehouse-graph" aria-label="물류창고 시간별 수량 그래프. 좌우 방향키로 이동합니다.">
+              <p class="loading-graph">시간별 기록 조회 중</p>
+              <p hidden>시간별 기록이 없습니다.</p>
+              <div class="graph-scroll" tabindex="0" aria-label="물류창고 시간별 수량 그래프. 좌우 방향키로 이동합니다." hidden></div>
+              <p hidden>오늘 시간별 완료 수량 · 좌우로 이동해 확인하세요.</p>
+            </section>
+          </article>
+        </div>
+        <section aria-labelledby="operations-status-title">
+          <h2 id="operations-status-title">운영 상태</h2>
+          <p>공장·창고의 마지막 기록 시각과 서비스별 상시 운영 상태를 확인합니다.</p>
+          <div class="grid status-grid">
+            <article id="factory-status" class="card">
+              <h3><span>공장 생산 기록</span><span class="badge good">정상</span></h3>
+              <p>기록이 반영되고 있습니다.</p>
+              <p class="meta">기준 시각 대비: 15분 전 · 발생 시각: 2026. 10. 26. 12:55:00</p>
+              <a class="card-link" href="#/records/factory">오늘 생산 기록 보기</a>
+            </article>
+            <article id="warehouse-status" class="card">
+              <h3><span>창고 출고 기록</span><span class="badge good">정상</span></h3>
+              <p>기록이 반영되고 있습니다.</p>
+              <p class="meta">기준 시각 대비: 12분 전 · 발생 시각: 2026. 10. 26. 12:58:00</p>
+              <a class="card-link" href="#/records/warehouse">오늘 출고 기록 보기</a>
+            </article>
+            <article id="alerts-status" class="card">
+              <h3><span>알림 전송 기록</span><span class="badge good">전송 성공</span></h3>
+              <p>알림 전송이 완료됐습니다.</p>
+              <p class="meta">마지막 전송 시도: 2026. 10. 26. 12:30:00</p>
+            </article>
+          </div>
+        </section>
+        <section aria-labelledby="record-processing-title">
+          <h2 id="record-processing-title">기록 처리 상태</h2>
+          <p>현장 기록의 발생·서버 접수·서버 처리 시각을 확인합니다.</p>
+          <div class="grid">
+            <article id="factory-flow" class="card">
+              <h3>텀블공장</h3>
+              <p class="meta">기록 처리 정보 조회 중</p>
+            </article>
+            <article id="warehouse-flow" class="card">
+              <h3>물류창고</h3>
+              <p class="meta">기록 처리 정보 조회 중</p>
+            </article>
+          </div>
+        </section>
+        <section aria-labelledby="query-history-title">
+          <h2 id="query-history-title">데이터 조회 기록</h2>
+          <p>이 탭에서 대시보드가 서버에 요청한 기록입니다. 공장·창고는 같은 요청으로 조회합니다.</p>
+          <div class="grid">
+            <article class="card">
+              <h3>공장 조회</h3>
+              <p id="factory-query">조회 기록 없음</p>
+              <p id="factory-query-meta" hidden></p>
+              <a class="card-link" href="#/queries/factory">전체보기</a>
+            </article>
+            <article class="card">
+              <h3>창고 조회</h3>
+              <p id="warehouse-query">조회 기록 없음</p>
+              <p id="warehouse-query-meta" hidden></p>
+              <a class="card-link" href="#/queries/warehouse">전체보기</a>
+            </article>
+          </div>
+        </section>
+        <div id="today-view"></div>
+        <noscript>
+          <p class="notice warning">화면을 보려면 브라우저에서 자바스크립트를 허용해 주세요.</p>
+        </noscript>
+      </section>
+    </main>
+
+    <footer>텀블공장 &middot; 생산·출고 운영</footer>
+  </body>
+</html>
